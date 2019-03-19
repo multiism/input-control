@@ -1,17 +1,18 @@
 # Input Control
 
-Give users control over input.
+Give people control over input.
 
-If you're working on a game jam, quick, drop this library in!
-Otherwise, quick, drop this library in!
+If you're working on a game jam, "quick, drop this library in!"
+Otherwise: "quick, drop this library in!"
+That is, it'll still be quick either way.
 
 ### Goals
 
-- **Provide a clean API for receiving controls.**
+- On the dev side, **provide a clean API for consuming inputs.**
 
 	- Without using a library,
 	I've found it works fairly well to have a `Controller` object
-	with properties for the available controls
+	with properties for the available controls (like `controller.jump`)
 	and subclasses like `KeyboardController` and `GamepadController`
 	that provide an `update` method.
 
@@ -21,22 +22,20 @@ Otherwise, quick, drop this library in!
 		- I've also used an `AIController` for NPCs, which works well.
 		An `AIController` generally needs access to the entity it's controlling and the world/level/room it resides in.
 		(If you have several entities with AI, you might want separate `Controller` classes for each
-		or you might want to simply handle the AI in the entities' regular update/step.)
+		or you might want to simply handle the AI in the entities' regular update/step. But having controllers decoupled is fun, it lets you swap things around and make an AI-controlled player or play as an enemy.)
 
+	<!--
 	- We'd support arbitrary controls and controllers though,
 	so it would probably always use something like the equivalent of a `CoupledController`
 	although with sometimes only one sub-controller.
 	And it probably doesn't make sense to have the properties directly on the object.
-	<!--
+
 	You might want to use the verb `update` as a control name for instance.
 	We could use a title-case naming scheme and recommend always using bracket notation,
 	i.e. `controller["Update"]`
 	and then you shouldn't run into any problems making a game about prototyping.
-	But that wouldn't be ideal,
-	and neither would storing the properties on a single-char property to try to preserve terseness
-	i.e. `controller._.update`.
+	But that wouldn't be ideal.
 	Being able to say `controller.jump` is nice.
-	Not being able to use `controller.update` would be: not nice.
 	-->
 	<!-- This isn't the hugest issue, but API comfort is important. -->
 
@@ -66,7 +65,7 @@ such as touchscreen controls for mobile devices
 (which could be handled by a library.)
 
 
-- Support mobile-device-as-a-controller, a la [node-virtual-gamepads](https://github.com/miroof/node-virtual-gamepads) or [nunchuck.js](https://github.com/ehzhang/nunchuck)
+- Support mobile-device-as-a-controller, a la [node-virtual-gamepads](https://github.com/miroof/node-virtual-gamepads), [nunchuck.js](https://github.com/ehzhang/nunchuck), or [snex.io](https://snex.io)
 
 
 - **Support multiplayer**, local and networked.
@@ -78,13 +77,12 @@ I used a server-side `Controller` that received input from a client over the net
 
 
 - **Provide a clean API for rendering controls** as text, icons, or both,
-for use in menus, HUDs, sign posts in game worlds, etc.
+for use in menus, HUDs, sign posts in a tutorial level, etc.
 
 	- In a local multiplayer game,
 	you need to show the controls for both/all players.
 	(Sometimes they're the same, i.e. multiple controllers of the same type,
 	but you can't guarantee this.)
-	<!-- ...should this be here? -->
 
 	- You should have full control over the text displayed,
 	and should be able to handle it intelligently.
@@ -104,9 +102,8 @@ for use in menus, HUDs, sign posts in game worlds, etc.
 	with the option to create a custom theme,
 	or render whatever you want based on a descriptor.
 
-		- Something like `{type: "stick", name: "left-stick", pressed: true, stickX: 0, stickY: 0}`
-		(and other types like `key`, `button`, `directional-button` or `dpad-button`, maybe the whole `dpad`;
-		maybe `stickX`/`stickY` should just be `x`/`y` so it can be the same for the dpad)
+		- Something like `{type: "stick", name: "left-stick", pressed: true, x: 0, y: 0}`
+		(and other types like `key`, `button`, `dpad-button`, maybe the whole `dpad`)
 
 		- It would be nice to have dynamic icons for analog sticks.
 		(For instance you might want to indicate the player should move the stick in a circular motion or back and forth)
@@ -149,8 +146,8 @@ and enjoy it.)
 	- (Input Control is all about giving power back to the users.)
 	- Could recommend loading the script from [unpkg](https://unpkg.com/) with a version range,
 	but I tend to download scripts locally, and I don't know about that.
-	I wouldn't want to be in a position to instantly cripple a bunch of games,
-	accidentally or otherwise.
+	You'd definitely want to fall back to a local version if it fails to load.
+	Also, I wouldn't want to be in a position to accidentally break a bunch of games, if possible.
 	- Could have a button in the settings
 	that tries to dynamically load a newer version of the library
 	and somehow have it plug in and have it take over,
@@ -167,12 +164,11 @@ There are theoretical benefits to having a shared system:
 (Open source FTW)
 - As well as **simply all the features that wouldn't make sense for any one game to implement**
 unless it's a core gameplay conceit, like using a phone as a controller (and perhaps as a lightsaber [in a Star Wars game](https://www.chromeexperiments.com/experiment/lightsaber-escape)).
-Or undo/redo. Come on, no game is gonna implement undo/redo.
+Or undo/redo. Come on, no game is gonna implement undo/redo, in their control configuration screen, if they even have one.
 But *ideally* tho, ideally, on an ideal situation, they would. And a library can.
-<!-- And once enough games start using the library... -->
 
 <!--
-### Problems / the state of things / this is a real mess
+### Problems / the state of things / this is a real mess of a section
 
 Users could install remapping software--
 sometimes have to install remapping software--
@@ -198,11 +194,9 @@ This library gives you *no excuse*.
 Yeah, so -
 - ease for the dev
 - power to the player
-- useful features you'd never bother to implement yourself (or hadn't even thought of)
+- useful features individual games would generally never bother to implement
 - consistency and solidity
 - and long term benefits *across* games to adoption.
 
-It's a piece of cake, or at your choice, pie (heck, maybe even some pie menus?)
-with some ice cream thrown in there for FREE -
-that's the goal.
-Summed up in terms of food.
+
+This is not in development. Development has not started! And I'm not planning on starting in the near foreseeable future. But if you're interested in something like this, particularly in creating 

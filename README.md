@@ -14,7 +14,7 @@ That is, it'll still be quick either way.
 	I've found it works fairly well to have a `Controller` object
 	with properties for the available controls (like `controller.jump`)
 	and subclasses like `KeyboardController` and `GamepadController`
-	that provide an `update` method.
+	that provide an `update` method that actually updates the input properties.
 
 		- A `CoupledController` can be used to support both keyboard and gamepad,
 		good for single-player games with hard-coded controls.
@@ -39,41 +39,30 @@ That is, it'll still be quick either way.
 	-->
 	<!-- This isn't the hugest issue, but API comfort is important. -->
 
-
-<!-- This is a UI thing, should reorganize -->
-- **Allow high level assignment of controllers**
-(keyboard/mouse, gamepads etc.)
-to players
-<!-- you shouldn't have to remap every control
-when you realize the gamepads are 0 indexed
-even though it defaults to Gamepad 1 for Player 2
-because Player 1 has the Keyboard/Mouse and it just gives a player the gamepad corresponding to the slot--
-okay, input mapping was a particularly bad in that game (I don't remember what game);
-but the point is it's nice to have high level control over this
-(like splitscreen when inevitably you're on the opposite sides from the way you're sitting,
-even though it would obviously be better split top and bottom since it's a frickin' FPS on a widescreen TV
-but that isn't an option
-*cough* Borderlands, PS3) -->
-<!-- Cortex Command does this part nicely if I recall correctly -->
+	<!-- - **Support multiplayer**, local and networked.
+	I don't have much experience doing networked multiplayer games.
+	When I did, it helped to have a `Controller`
+	that I could serialize and deserialize,
+	to sync up inputs between clients rather than just velocities and such, because it implies syncing up (what leads to) acceleration instead of just velocity and position. 
+	I used a server-side `Controller` that received input from a client over the network. -->
 
 
 - **Allow remapping** of individual keyboard, mouse, gamepad, and other inputs.
 
 
-- **Allow deferring to other means of control**
+- **Allow high level assignment of controllers to players**, so you can say okay, Player 1 is keyboard+mouse and Player 2 is gamepad 1 (and then when you realize the side by side splitscreen doesn't match how you're sitting with this setting, you can just swap it, without having to remap every control.)
+Cortex Command has a nice version of this if I recall correctly, including setting players as AIs; that could be useful.
+
+
+- Allow deferring to other means of control
 such as touchscreen controls for mobile devices
 (which could be handled by a library.)
 
 
-- Support mobile-device-as-a-controller, a la [node-virtual-gamepads](https://github.com/miroof/node-virtual-gamepads), [nunchuck.js](https://github.com/ehzhang/nunchuck), or [snex.io](https://snex.io)
+- Support mobile-device-as-a-controller, a la [node-virtual-gamepads](https://github.com/miroof/node-virtual-gamepads), [nunchuck.js](https://github.com/ehzhang/nunchuck), ...or [snex.io](https://snex.io)!
 
 
-- **Support multiplayer**, local and networked.
-I don't have much experience doing networked multiplayer games.
-When I did, it helped to have a `Controller`
-that I could serialize and deserialize,
-to sync up inputs between clients rather than just velocities and such.
-I used a server-side `Controller` that received input from a client over the network.
+- MIDI devices as controllers - why not! This would open up to a weird range of devices, which could be fun.
 
 
 - **Provide a clean API for rendering controls** as text, icons, or both,
